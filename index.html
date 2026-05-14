@@ -4,140 +4,277 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>С Днем Рождения, Папа!</title>
+    <!-- Подключаем очень теплый, мягкий и душевный праздничный шрифт -->
+    <link rel="preconnect" href="googleapis.com">
+    <link rel="preconnect" href="gstatic.com" crossorigin>
+    <link href="googleapis.com" rel="stylesheet">
     <style>
         * { 
             box-sizing: border-box; 
-        }
-        body {
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: radial-gradient(circle at center, #1a2a6c, #b21f1f, #fdbb2d);
+            background-size: 400% 400%;
+            animation: gradientBg 15s ease infinite;
+            font-family: 'Comfortaa', cursive, sans-serif;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             color: white;
             overflow-x: hidden;
+            perspective: 1000px;
+            position: relative;
         }
+        
+        @keyframes gradientBg {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Задний фон с душевными мерцающими огоньками */
+        .background-lights {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+        .light {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: floatLights 8s infinite ease-in-out;
+        }
+        @keyframes floatLights {
+            0%, 100% { transform: translateY(0) scale(1); opacity: 0.2; }
+            50% { transform: translateY(-30px) scale(1.2); opacity: 0.6; }
+        }
+
         .container {
             text-align: center;
-            padding: 20px;
+            padding: 30px;
             width: 100%;
             max-width: 800px;
+            z-index: 2;
         }
-        /* Стили подарочной коробки */
+
+        /* Твоя любимая 3D подарочная коробка */
         .gift-wrapper {
             cursor: pointer;
-            transition: transform 0.3s ease;
             display: inline-block;
-        }
-        .gift-wrapper:hover { 
-            transform: scale(1.05); 
-        }
-        .gift-box {
-            width: 200px;
-            height: 200px;
-            background: #e74c3c;
             position: relative;
-            border-radius: 10px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            animation: float 3s ease-in-out infinite;
         }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+        }
+
+        .gift-wrapper:hover .gift-box {
+            animation: shake 0.5s ease-in-out infinite;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: rotate(0deg) scale(1.05); }
+            20% { transform: rotate(-4deg) scale(1.05); }
+            40% { transform: rotate(4deg) scale(1.05); }
+            60% { transform: rotate(-2deg) scale(1.05); }
+            80% { transform: rotate(2deg) scale(1.05); }
+        }
+
+        .gift-box {
+            width: 220px;
+            height: 220px;
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            position: relative;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 -10px 20px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+
         .gift-box::before {
             content: '';
             position: absolute;
-            width: 40px;
+            width: 45px;
             height: 100%;
-            background: #f1c40f;
-            left: 80px;
-            top: 0;
+            background: linear-gradient(to right, #ffe259, #ffa751);
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
         }
+
         .gift-box::after {
             content: '';
             position: absolute;
             width: 100%;
-            height: 40px;
-            background: #f1c40f;
-            left: 0;
-            top: 80px;
+            height: 45px;
+            background: linear-gradient(to bottom, #ffe259, #ffa751);
+            top: 50%;
+            transform: translateY(-50%);
+            border-radius: 2px;
         }
+
         .bow {
-            width: 60px;
-            height: 60px;
-            background: #f1c40f;
-            border-radius: 50%;
             position: absolute;
-            top: -30px;
-            left: 70px;
-            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+            top: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 40px;
+            z-index: 5;
         }
+        .bow::before, .bow::after {
+            content: '';
+            position: absolute;
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #ffe259, #ffa751);
+            border-radius: 50% 50% 0 50%;
+            transform: rotate(-45deg);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .bow::after {
+            left: auto;
+            right: 0;
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(45deg);
+        }
+
         .instruction {
-            font-size: 1.2rem;
-            margin-top: 20px;
-            animation: blink 1.5s infinite;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-top: 35px;
+            background: linear-gradient(to right, #fff, #ffe259, #fff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shineText 3s linear infinite;
+            text-shadow: 0 0 20px rgba(255,226,89,0.3);
         }
-        @keyframes blink {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
+        
+        @keyframes shineText {
+            to { background-position: 200% center; }
         }
-        /* Контент, который откроется */
+
+        /* Контент после открытия */
         .content {
             display: none;
             opacity: 0;
-            transition: opacity 1s ease-in-out;
+            transform: scale(0.8) translateY(50px);
+            transition: all 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .content.show {
             display: block;
             opacity: 1;
+            transform: scale(1) translateY(0);
         }
+
         h1 { 
-            font-size: 3rem; 
-            margin-bottom: 20px; 
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5); 
+            font-size: 3.2rem; 
+            font-weight: 700;
+            margin-bottom: 30px; 
+            text-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            background: linear-gradient(135deg, #ffffff, #ffe259);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
+
+        /* Очень нежная, матовая "стеклянная" карточка */
         .wishes { 
             font-size: 1.3rem; 
-            line-height: 1.6; 
+            line-height: 1.9; 
             margin-bottom: 40px; 
-            background: rgba(255,255,255,0.1); 
-            padding: 30px; 
-            border-radius: 15px; 
-            backdrop-filter: blur(5px); 
+            background: rgba(255, 255, 255, 0.12); 
+            padding: 45px 35px; 
+            border-radius: 30px; 
+            backdrop-filter: blur(20px); 
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.25);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.35);
+            transition: transform 0.4s ease;
         }
-        /* Блок для фотографий */
+        .wishes:hover {
+            transform: translateY(-5px);
+        }
+        
+        .wishes p {
+            margin-bottom: 20px;
+        }
+        .wishes p:last-child { margin-bottom: 0; }
+
+        /* Зона для семейных фото */
         .collage-zone {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 30px;
-            border-radius: 15px;
-            border: 2px dashed rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.25);
+            padding: 40px;
+            border-radius: 30px;
+            border: 2px dashed rgba(255, 226, 89, 0.4);
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.4);
+            transition: all 0.4s ease;
+        }
+        .collage-zone:hover {
+            border-color: rgba(255, 226, 89, 0.8);
         }
         .collage-title {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            color: #f1c40f;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: #ffe259;
+            text-shadow: 0 4px 15px rgba(255,226,89,0.3);
         }
         .photo-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
         }
         .photo-card-placeholder {
-            background: rgba(0, 0, 0, 0.3);
-            height: 200px;
+            background: rgba(255, 255, 255, 0.04);
+            height: 250px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 10px;
+            border-radius: 20px;
             font-style: italic;
-            color: #aaa;
-            border: 1px dashed #555;
+            color: #ddd;
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .photo-card-placeholder:hover {
+            transform: translateY(-8px) scale(1.03) rotate(1deg);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #ffe259;
+            box-shadow: 0 20px 35px rgba(255,226,89,0.15);
+        }
+
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
 
+    <!-- Огоньки на фоне -->
+    <div class="background-lights" id="lightsContainer"></div>
+
+    <!-- Конфетти -->
+    <canvas id="confetti-canvas"></canvas>
+
     <div class="container">
-        <!-- Кнопка-коробка -->
+        <!-- Коробка -->
         <div class="gift-wrapper" id="giftButton" onclick="openGift()">
             <div class="gift-box">
                 <div class="bow"></div>
@@ -154,11 +291,9 @@
                 <p>Спасибо тебе за твою поддержку, мудрость и заботу. Желаю тебе крепкого здоровья, бесконечного счастья, успехов во всех делах и отличного настроения каждый день. Оставайся всегда таким же сильным и замечательным человеком!</p>
             </div>
 
-            <!-- Зона фотоколлажа -->
             <div class="collage-zone">
-                <div class="collage-title">📸 Наш семейный фотоальбом</div>
+                <div class="collage-title">❤️ Наш семейный фотоальбом</div>
                 <div class="photo-grid">
-                    <!-- Сюда вставим фотографии -->
                     <div class="photo-card-placeholder">Место для фото 1</div>
                     <div class="photo-card-placeholder">Место для фото 2</div>
                     <div class="photo-card-placeholder">Место для фото 3</div>
@@ -169,13 +304,88 @@
     </div>
 
     <script>
+        // Создание мягких огоньков на фоне
+        const lightsContainer = document.getElementById('lightsContainer');
+        for (let i = 0; i < 20; i++) {
+            const light = document.createElement('div');
+            light.classList.add('light');
+            const size = Math.random() * 40 + 20;
+            light.style.width = `${size}px`;
+            light.style.height = `${size}px`;
+            light.style.left = `${Math.random() * 100}%`;
+            light.style.top = `${Math.random() * 100}%`;
+            light.style.animationDelay = `${Math.random() * 5}s`;
+            light.style.animationDuration = `${Math.random() * 6 + 4}s`;
+            lightsContainer.appendChild(light);
+        }
+
         function openGift() {
             const gift = document.getElementById('giftButton');
             const content = document.getElementById('mainContent');
             
             gift.style.display = 'none';
             content.classList.add('show');
+            
+            initConfetti();
         }
+
+        function initConfetti() {
+            const canvas = document.getElementById('confetti-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const colors = ['#ffe259', '#ffa751', '#ff416c', '#ff4b2b', '#ffffff', '#a8ff78'];
+            const confetti = [];
+
+            for (let i = 0; i < 180; i++) {
+                confetti.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    r: Math.random() * 6 + 4,
+                    d: Math.random() * canvas.height,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    tilt: Math.random() * 10 - 5,
+                    tiltAngleIncremental: Math.random() * 0.06 + 0.02,
+                    tiltAngle: 0
+                });
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                confetti.forEach((p, index) => {
+                    p.tiltAngle += p.tiltAngleIncremental;
+                    p.y += (Math.cos(p.d) + 3 + p.r / 2) / 2;
+                    p.tilt = Math.sin(p.tiltAngle - index / 3) * 15;
+
+                    ctx.beginPath();
+                    ctx.lineWidth = p.r;
+                    ctx.strokeStyle = p.color;
+                    ctx.moveTo(p.x + p.tilt + p.r / 2, p.y);
+                    ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 2);
+                    ctx.stroke();
+                });
+
+                confetti.forEach((p, i) => {
+                    if (p.y > canvas.height) {
+                        confetti[i] = p;
+                        p.x = Math.random() * canvas.width;
+                        p.y = -20;
+                    }
+                });
+
+                requestAnimationFrame(draw);
+            }
+            draw();
+        }
+
+        window.addEventListener('resize', () => {
+            const canvas = document.getElementById('confetti-canvas');
+            if(canvas) {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+        });
     </script>
 </body>
 </html>
