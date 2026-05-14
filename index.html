@@ -3,419 +3,179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>С 8 Марта — твоя открытка</title>
+    <title>С Днем Рождения, Папа!</title>
     <style>
-        /* ========== СБРОС И БАЗОВЫЙ СТИЛЬ ========== */
-        * {
+        * { 
+            box-sizing: border-box; 
+        }
+        body {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             min-height: 100vh;
-            background: linear-gradient(145deg, #fda4b9 0%, #fcd9e6 40%, #ffe2f0 100%);
-            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            overflow-x: hidden;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+            max-width: 800px;
+        }
+        /* Стили подарочной коробки */
+        .gift-wrapper {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+        .gift-wrapper:hover { 
+            transform: scale(1.05); 
+        }
+        .gift-box {
+            width: 200px;
+            height: 200px;
+            background: #e74c3c;
+            position: relative;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        .gift-box::before {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 100%;
+            background: #f1c40f;
+            left: 80px;
+            top: 0;
+        }
+        .gift-box::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 40px;
+            background: #f1c40f;
+            left: 0;
+            top: 80px;
+        }
+        .bow {
+            width: 60px;
+            height: 60px;
+            background: #f1c40f;
+            border-radius: 50%;
+            position: absolute;
+            top: -30px;
+            left: 70px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+        }
+        .instruction {
+            font-size: 1.2rem;
+            margin-top: 20px;
+            animation: blink 1.5s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        /* Контент, который откроется */
+        .content {
+            display: none;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .content.show {
+            display: block;
+            opacity: 1;
+        }
+        h1 { 
+            font-size: 3rem; 
+            margin-bottom: 20px; 
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5); 
+        }
+        .wishes { 
+            font-size: 1.3rem; 
+            line-height: 1.6; 
+            margin-bottom: 40px; 
+            background: rgba(255,255,255,0.1); 
+            padding: 30px; 
+            border-radius: 15px; 
+            backdrop-filter: blur(5px); 
+        }
+        /* Блок для фотографий */
+        .collage-zone {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+        }
+        .collage-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #f1c40f;
+        }
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .photo-card-placeholder {
+            background: rgba(0, 0, 0, 0.3);
+            height: 200px;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-            overflow-x: hidden;
-            padding: 16px;
-        }
-
-        /* ========== АНИМИРОВАННЫЙ ФОН ========== */
-        body::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" opacity="0.15"><path fill="%23ffa5c3" d="M40 70q-5-20 15-25t25 15q5-15 20-10t5 25q20 5 10 30t-30 10q-10 20-35 10T40 90q-20-5-10-30t35-10zM150 30q10-15 25-5t-5 25q15 5 5 25t-25 5q-5 15-25 5t-5-30q-15-5-5-25t25 5zM130 150q-10-10 0-25t25 0q5-15 20-5t0 25q15 10 0 25t-25-5q-10 15-25 0t5-30zM20 160q-5-10 5-20t20 5q5-10 15-5t0 20q10 5 0 15t-20 0q-5 10-15 0t5-25z"/></svg>') repeat;
-            background-size: 220px 220px;
-            pointer-events: none;
-            z-index: 0;
-            animation: drift 50s linear infinite;
-            opacity: 0.4;
-        }
-
-        body::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 15% 40%, rgba(255, 240, 250, 0.7) 2px, transparent 2px),
-                        radial-gradient(circle at 90% 70%, rgba(255, 200, 230, 0.8) 3px, transparent 3px);
-            background-size: 60px 60px, 100px 100px;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.5;
-            animation: glitter 9s infinite alternate;
-        }
-
-        @keyframes drift {
-            0% { background-position: 0 0; }
-            100% { background-position: 250px 250px; }
-        }
-
-        @keyframes glitter {
-            0% { opacity: 0.3; transform: scale(1); }
-            100% { opacity: 0.9; transform: scale(1.01); }
-        }
-
-        /* ========== ГЛАВНЫЙ КОНТЕЙНЕР ========== */
-        .wrapper {
-            position: relative;
-            z-index: 20;
-            max-width: 760px;
-            width: 100%;
-            background: rgba(255, 240, 250, 0.6);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-radius: 70px 70px 50px 50px;
-            box-shadow: 0 40px 60px rgba(210, 100, 150, 0.35),
-                        0 0 0 3px rgba(255, 255, 255, 0.9) inset,
-                        0 0 40px #ffbfd5;
-            padding: 28px 24px 50px;
-            border: 2px solid rgba(255, 245, 250, 0.8);
-            animation: rise 1s ease-out;
-        }
-
-        @keyframes rise {
-            0% { opacity: 0; transform: scale(0.92) translateY(30px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
-        }
-
-        /* ========== ЗАГОЛОВОК ========== */
-        .main-title {
-            text-align: center;
-            font-size: clamp(2.8rem, 14vw, 5rem);
-            font-weight: 900;
-            background: linear-gradient(145deg, #b03e6f, #de5f93, #ffacc7);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 4px;
-            filter: drop-shadow(0 6px 8px #fbb0cb);
-            letter-spacing: 2px;
-            animation: titlePulse 3s infinite alternate;
-        }
-
-        @keyframes titlePulse {
-            0% { filter: drop-shadow(0 4px 6px #f59dbb); transform: scale(1); }
-            100% { filter: drop-shadow(0 14px 20px #ff87b3); transform: scale(1.01); }
-        }
-
-        .sub-line {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            font-size: 1.6rem;
-            color: #862d52;
-            background: rgba(255, 230, 245, 0.8);
-            width: fit-content;
-            margin: 0 auto 20px;
-            padding: 8px 28px;
-            border-radius: 50px;
-            backdrop-filter: blur(4px);
-            border: 2px solid white;
-            box-shadow: 0 8px 12px #fbb0c5;
-            transform: rotate(-1deg);
-            font-weight: 500;
-        }
-
-        /* ========== ДЕКОР ЦВЕТЫ ========== */
-        .flowers-row {
-            display: flex;
-            justify-content: center;
-            gap: 26px;
-            margin: 18px 0 20px;
-        }
-
-        .bloom {
-            width: 70px;
-            height: 70px;
-            background: radial-gradient(circle at 35% 30%, #ffbfd5, #ff88b1);
-            border-radius: 70% 30% 60% 40% / 40% 60% 30% 70%;
-            box-shadow: 0 12px 18px #f68daf, 0 0 0 5px #fff9 inset;
-            transform: rotate(2deg);
-            animation: floatFlower 4.5s infinite alternate;
-        }
-
-        .bloom:nth-child(2) {
-            background: radial-gradient(circle at 40% 40%, #fec7dd, #ff7ca3);
-            border-radius: 50% 50% 30% 70% / 60% 30% 70% 40%;
-            transform: rotate(-6deg) scale(0.95);
-            animation-delay: 0.7s;
-        }
-
-        .bloom:nth-child(3) {
-            background: radial-gradient(circle at 20% 55%, #ffd2e4, #ff6d9e);
-            border-radius: 40% 60% 50% 50% / 50% 40% 60% 50%;
-            transform: rotate(12deg) scale(1.05);
-            animation-delay: 0.3s;
-        }
-
-        @keyframes floatFlower {
-            0% { transform: translateY(0) rotate(2deg); }
-            100% { transform: translateY(-14px) rotate(6deg); }
-        }
-
-        /* ========== КНОПКА ДЛЯ ВАШЕЙ ОТКРЫТКИ ========== */
-        .magic-btn {
-            display: block;
-            margin: 28px auto 32px;
-            padding: 22px 58px;
-            font-size: 2rem;
-            font-weight: 700;
-            color: #71254a;
-            background: linear-gradient(130deg, #ffe6f1, #ffc7db);
-            border: none;
-            border-radius: 100px 100px 60px 30px;
-            box-shadow: 0 18px 0 #ad3d6b, 0 25px 35px #e78eb0, 0 0 0 4px #fff inset;
-            cursor: pointer;
-            transition: 0.15s;
-            transform: rotate(-1deg);
-            letter-spacing: 3px;
-            text-shadow: 0 2px 10px white;
-            border: 2px solid white;
-            outline: none;
-        }
-
-        .magic-btn:hover {
-            transform: translateY(-7px) rotate(-1deg);
-            box-shadow: 0 12px 0 #ad3d6b, 0 40px 40px #f8a7c3, 0 0 0 4px #fff inset;
-        }
-
-        .magic-btn:active {
-            transform: translateY(10px) rotate(-1deg);
-            box-shadow: 0 6px 0 #ad3d6b, 0 25px 30px #e67eaa;
-        }
-
-        /* ========== КОНТЕЙНЕР ДЛЯ ВАШЕЙ ОТКРЫТКИ ========== */
-        .your-card {
-            margin: 25px 0 10px;
-            background: rgba(255, 240, 250, 0.8);
-            backdrop-filter: blur(7px);
-            border-radius: 60px 20px 60px 20px;
-            padding: 24px 22px 32px;
-            border: 4px solid white;
-            box-shadow: 0 30px 40px #f594b6, 0 0 0 10px #ffeaf3 inset;
-            transition: all 0.5s cubic-bezier(0.34, 1.4, 0.64, 1);
-            transform-origin: top;
-            opacity: 0;
-            transform: scale(0.3) translateY(-200px) rotate(-10deg);
-            pointer-events: none;
-            position: relative;
-        }
-
-        .your-card.show {
-            opacity: 1;
-            transform: scale(1) translateY(0) rotate(0deg);
-            pointer-events: all;
-        }
-
-        /* декоративный блеск внутри */
-        .your-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at 20% 30%, #fff9 8%, transparent 20%),
-                        radial-gradient(circle at 90% 70%, #fff 10%, transparent 20%);
-            opacity: 0.5;
-            border-radius: inherit;
-            pointer-events: none;
-        }
-
-        /* ===== ИНСТРУКЦИЯ: СЮДА ВСТАВЬТЕ СВОЮ ОТКРЫТКУ ===== */
-        .card-placeholder {
-            text-align: center;
-            position: relative;
-            z-index: 5;
-        }
-
-        .your-image {
-            max-width: 100%;
-            border-radius: 40px 20px 40px 20px;
-            box-shadow: 0 20px 30px #c96a92;
-            border: 5px solid white;
-            display: block;
-            margin: 0 auto 15px;
-        }
-
-        /* заглушка-пример: текст и ссылка для вставки вашего контента */
-        .custom-content {
-            background: #ffecf2;
-            border-radius: 50px;
-            padding: 28px 15px;
-            border: 3px dashed #ffa5c3;
-            color: #872351;
-            font-size: 1.5rem;
-            font-weight: 500;
-            box-shadow: inset 0 2px 10px #ffdbea;
-        }
-
-        .custom-content a {
-            color: #b33b70;
-            font-weight: bold;
-            word-break: break-all;
-            background: #ffeef7;
-            padding: 10px 20px;
-            border-radius: 40px;
-            display: inline-block;
-            margin-top: 15px;
-            border: 2px solid white;
-        }
-
-        /* ========== ПАДАЮЩИЕ ЛЕПЕСТКИ ========== */
-        .petal-particle {
-            position: absolute;
-            top: -5%;
-            background: #ffb5c9;
-            width: 22px;
-            height: 22px;
-            border-radius: 80% 0 50% 30%;
-            opacity: 0.5;
-            transform: rotate(15deg);
-            pointer-events: none;
-            z-index: 5;
-            filter: drop-shadow(0 0 6px #ff90b5);
-            animation: falling 10s linear infinite;
-        }
-
-        @keyframes falling {
-            0% { top: -5%; transform: rotate(0deg) translateX(0); opacity: 0.6; }
-            100% { top: 105%; transform: rotate(360deg) translateX(90px); opacity: 0; }
-        }
-
-        /* доп. текст-подсказка */
-        .hint {
-            text-align: center;
-            font-size: 1.3rem;
-            color: #9e4269;
-            text-shadow: 1px 1px white;
-            margin: 25px 0 5px;
-            background: rgba(255, 255, 255, 0.5);
-            padding: 6px 15px;
-            border-radius: 60px;
-            width: fit-content;
-            margin-left: auto;
-            margin-right: auto;
-            backdrop-filter: blur(3px);
+            border-radius: 10px;
+            font-style: italic;
+            color: #aaa;
+            border: 1px dashed #555;
         }
     </style>
 </head>
 <body>
-    <!-- Летящие лепестки (генерируются ещё и в js) -->
-    <div class="petal-particle" style="left: 8%; animation-delay: 0s; background: #ffb2c6;"></div>
-    <div class="petal-particle" style="left: 22%; animation-delay: 4s; background: #fec7d5; width: 30px; height: 30px;"></div>
-    <div class="petal-particle" style="left: 45%; animation-delay: 1.8s; background: #faa; width: 18px; height: 18px;"></div>
-    <div class="petal-particle" style="left: 63%; animation-delay: 6.5s; background: #ffb7cf; width: 26px;"></div>
-    <div class="petal-particle" style="left: 80%; animation-delay: 2.3s; background: #ffc0d5; width: 21px;"></div>
-    <div class="petal-particle" style="left: 92%; animation-delay: 7.8s; background: #ff9eb9; width: 35px; height: 28px;"></div>
 
-    <main class="wrapper">
-        <!-- красивые цветы (декор) -->
-        <div class="flowers-row">
-            <div class="bloom"></div>
-            <div class="bloom"></div>
-            <div class="bloom"></div>
+    <div class="container">
+        <!-- Кнопка-коробка -->
+        <div class="gift-wrapper" id="giftButton" onclick="openGift()">
+            <div class="gift-box">
+                <div class="bow"></div>
+            </div>
+            <div class="instruction">Нажми на подарок, чтобы открыть! 🎁</div>
         </div>
 
-        <h1 class="main-title">С 8 марта</h1>
-        <div class="sub-line">
-            <span>🌼</span> для тебя <span>🌼</span>
-        </div>
+        <!-- Поздравление и фото -->
+        <div class="content" id="mainContent">
+            <h1>С Днём Рождения, Папа! 🎉</h1>
+            
+            <div class="wishes">
+                <p>Дорогой папа! Поздравляю тебя с этим замечательным днем!</p>
+                <p>Спасибо тебе за твою поддержку, мудрость и заботу. Желаю тебе крепкого здоровья, бесконечного счастья, успехов во всех делах и отличного настроения каждый день. Оставайся всегда таким же сильным и замечательным человеком!</p>
+            </div>
 
-        <!-- КНОПКА ПОКАЗАТЬ МОЮ ОТКРЫТКУ -->
-        <button class="magic-btn" id="showMyCardBtn">💖 Показать мою открытку 💖</button>
-
-        <!-- БЛОК, ГДЕ БУДЕТ ВАША ОТКРЫТКА (сейчас там инструкция по замене) -->
-        <div class="your-card" id="myCard">
-            <div class="card-placeholder">
-                <!--
-                    ⚡ ВСТАВЬТЕ СВОЮ ОТКРЫТКУ СЮДА ⚡
-                    Например, можете заменить всё внутри на:
-                    - Изображение: <img src="ссылка_на_вашу_картинку" class="your-image" alt="открытка">
-                    - Или просто текст/стихи
-                    - Или ссылку на видео
-                -->
-                
-                <!-- ПРИМЕР КАРТИНКИ (ЗАМЕНИТЕ НА СВОЁ) -->
-                <img src="8marta.png" 
-                     alt="Ваша открытка" 
-                     class="your-image"
-                     style="max-width: 100%; border-radius: 40px;">
-
-                <!-- подсказка как заменить (можно удалить) -->
-                <div class="custom-content">
-                    🌷 <strong>твоя открытка</strong> 🌷<br>
-                    <span style="font-size: 1.2rem;">(здесь может быть твоё фото, рисунок или видео)</span><br>
-                    <!-- пример ссылки на файл -->
-                    <a href="#" target="_blank">моя-открытка.jpg</a>
+            <!-- Зона фотоколлажа -->
+            <div class="collage-zone">
+                <div class="collage-title">📸 Наш семейный фотоальбом</div>
+                <div class="photo-grid">
+                    <!-- Сюда вставим фотографии -->
+                    <div class="photo-card-placeholder">Место для фото 1</div>
+                    <div class="photo-card-placeholder">Место для фото 2</div>
+                    <div class="photo-card-placeholder">Место для фото 3</div>
+                    <div class="photo-card-placeholder">Место для фото 4</div>
                 </div>
-
-                <!-- Всё, что выше, замените на своё содержимое! -->
             </div>
         </div>
-
-        <div class="hint">
-            ✨ нажми кнопку — увидишь свою открытку ✨
-        </div>
-    </main>
+    </div>
 
     <script>
-        (function() {
-            const revealBtn = document.getElementById('showMyCardBtn');
-            const cardBlock = document.getElementById('myCard');
-
-            // Дополнительные лепестки для пущей красоты
-            for (let i = 0; i < 10; i++) {
-                const petal = document.createElement('div');
-                petal.className = 'petal-particle';
-                petal.style.left = Math.random() * 100 + '%';
-                petal.style.animationDelay = Math.random() * 10 + 's';
-                petal.style.background = `hsl(${340 + Math.random() * 30}, 80%, 75%)`;
-                petal.style.width = 12 + Math.random() * 25 + 'px';
-                petal.style.height = 12 + Math.random() * 25 + 'px';
-                document.body.appendChild(petal);
-            }
-
-            // Активация открытки по клику
-            revealBtn.addEventListener('click', function() {
-                cardBlock.classList.add('show');
-
-                // Делаем кнопку неактивной (по желанию)
-                revealBtn.disabled = true;
-                revealBtn.style.opacity = '0.9';
-                revealBtn.innerText = '🌺 Открытка открыта 🌺';
-
-                // Мини-салют: поменяем фон кнопки
-                revealBtn.style.background = 'linear-gradient(145deg, #ffe0b7, #ffbfdb)';
-                
-                // По желанию можно что-то ещё добавить, например, красивый скролл к открытке
-                setTimeout(() => {
-                    cardBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }, 200);
-            });
-
-            // Кнопка становится чуть ярче при загрузке
-            setTimeout(() => {
-                revealBtn.style.transform = 'rotate(-1deg) scale(1.03)';
-                setTimeout(() => {
-                    revealBtn.style.transform = '';
-                }, 400);
-            }, 300);
-        })();
-    </script>
-    <!-- дополнительный стиль для disabled кнопки -->
-    <style>
-        .magic-btn:disabled {
-            opacity: 0.9;
-            transform: scale(0.98) rotate(-1deg);
-            box-shadow: 0 8px 0 #ad3d6b, 0 20px 25px #e089b0;
-            cursor: default;
-            pointer-events: none;
-            filter: brightness(1.02);
+        function openGift() {
+            const gift = document.getElementById('giftButton');
+            const content = document.getElementById('mainContent');
+            
+            gift.style.display = 'none';
+            content.classList.add('show');
         }
-    </style>
+    </script>
 </body>
 </html>
